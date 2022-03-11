@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: medilab-boot-app-deployment
+  labels:
+    app: medilab-boot-app
+  namespace: app-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: medilab-boot-app
+  template:
+     metadata:
+       labels:
+         app: medilab-boot-app
+     spec:
+       imagePullSecrets:
+         - name: medilab-image-registry
+       containers:
+         - name: medilab-boot-app-container
+         #here it will pull the image from docker hub repository so first tag the image and push to docker hub.
+           image: saleem786/medilab-monolith-boot-app-img 
+           ports:
+             - containerPort: 8087
+           env:
+             - name: MEDILAB_BOOT_APP_DB_DRIVER
+               #value: com.mysql.jdbc.Driver
+               #adding all values from configMap
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB_DRIVER
+
+             - name: MEDILAB_BOOT_APP_DB_USERNAME
+              # value: root
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB_USERNAME
+
+             - name: MEDILAB_BOOT_APP_DB_PASSWORD
+               #value: root
+               valueFrom:
+                 secretKeyRef:
+                   name: medilab-config-secret
+                   key: MEDILAB_BOOT_APP_DB_PASSWORD
+
+             - name: MEDILAB_BOOT_APP_DB_TYP
+               #value: mysql
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key:  MEDILAB_BOOT_APP_DB_TYP
+
+             - name: MEDILAB_BOOT_APP_DB_CONTAINER_NAME
+             # here we need to give db service name not deployment name
+             #  value: medilab-boot-db-service
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB_CONTAINER_NAME
+
+             - name: MEDILAB_BOOT_APP_DB_PORT
+               #value: "3306"
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB_PORT
+
+             - name: MEDILAB_BOOT_APP_DB
+               #value: medilab-monolith-preclinic
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB
+
+             - name: MEDILAB_BOOT_APP_DB_DIALECT
+               #value: org.hibernate.dialect.MySQL5InnoDBDialect
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB_DIALECT
