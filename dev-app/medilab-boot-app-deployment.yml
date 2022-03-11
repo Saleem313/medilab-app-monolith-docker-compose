@@ -20,7 +20,7 @@ spec:
        containers:
          - name: medilab-boot-app-container
          #here it will pull the image from docker hub repository so first tag the image and push to docker hub.
-           image: saleem786/medilab-monolith-boot-app-img 
+           image: saleem786/medilab-boot-app-img
            ports:
              - containerPort: 8087
            env:
