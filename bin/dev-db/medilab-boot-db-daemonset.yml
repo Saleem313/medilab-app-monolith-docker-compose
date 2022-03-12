@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: medilab-boot-db-daemonset
+  labels:
+    app: medilab-boot-db
+  namespace: database-ns
+spec:
+  selector:
+    matchLabels: 
+      app: medilab-boot-db
+  template:
+     metadata:
+       labels:
+         app: medilab-boot-db
+     spec:
+       volumes:
+         - name: medilab-boot-db-volume
+           persistentVolumeClaim:
+             claimName: mysql-pvc
+      #  hostPath:
+      #     path: /var/opt/mysql-volume
+
+       containers:
+         - name: medilab-boot-db-container
+           image: mysql:5.7.36
+           ports:
+             - containerPort: 3306
+           volumeMounts:
+           - name: medilab-boot-db-volume
+             mountPath: /var/lib/mysql
+           env:
+             - name: MYSQL_ROOT_PASSWORD
+               #value: root
+               #assigning value from configMap file
+               #assinging value from secret file
+               valueFrom:
+                 secretKeyRef:
+                   name: medilab-config-secret
+                   key: MEDILAB_BOOT_APP_DB_PASSWORD
+
+             - name: MYSQL_DATABASE
+              # value: medilab-monolith-preclinic
+               valueFrom:
+                 configMapKeyRef:
+                   name: medilab-configmap
+                   key: MEDILAB_BOOT_APP_DB
