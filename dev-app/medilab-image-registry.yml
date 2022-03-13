@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: medilab-image-registry
+  namespace: app-ns
+data: {
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJzYWxlZW03ODYiLCJwYXNzd29yZCI6Ik1hZGthNzg2KiIsImF1dGgiOiJjMkZzWldWdE56ZzJPazFoWkd0aE56ZzJLZz09In19fQ==
+}
+type: kubernetes.io/dockerconfigjson
