@@ -1,5 +1,5 @@
 server:
-  port: '${MEDILAB_BOOT_APP_PORT:8085}'
+  port: '${MEDILAB_BOOT_APP_PORT:8087}'
 spring:
   application:
     name: medilab-monolith-app 
