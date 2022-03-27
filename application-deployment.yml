@@ -1,0 +1,18 @@
+---
+    - name: application-deployment
+      hosts: k8smaster
+      become: 'yes'
+      become_user: kubmaster
+      tasks:
+             - name: create the namespace for application
+               shell: kubectl apply -f dev-app/app-ns.yml
+             - name: create configmap for app
+               shell: kubectl apply -f dev-app/medilab-configmap.yml
+             - name: create secret for app
+               shell: kubectl apply -f dev-app/medilab-secret.yml
+             - name: create secret for registry
+               shell: kubectl apply -f dev-app/medilab-image-registry.yml
+             - name: create deployment for app
+               shell: kubectl apply -f dev-app/medilab-boot-app-deployment.yml
+             - name: create service for app
+               shell: kubectl apply -f dev-app/medilab-boot-app-service.yml

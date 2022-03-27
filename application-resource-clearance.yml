@@ -1,0 +1,18 @@
+---
+    - name:  application-resource-clearance
+      hosts: k8smaster
+      become: 'yes'
+      become_user: kubmaster
+      tasks:
+             - name: delete service for app
+               shell: kubectl delete -f dev-app/medilab-boot-app-service.yml
+             - name: delete deployment for app
+               shell: kubectl delete -f dev-app/medilab-boot-app-deployment.yml
+             - name: delete secret for registry
+               shell: kubectl delete -f dev-app/medilab-image-registry.yml
+             - name: delete secret for app
+               shell: kubectl delete -f dev-app/medilab-secret.yml
+             - name: delete configmap for app
+               shell: kubectl delete -f dev-app/medilab-configmap.yml
+             - name: delete the namespace for application
+               shell: kubectl delete -f dev-app/app-ns.yml

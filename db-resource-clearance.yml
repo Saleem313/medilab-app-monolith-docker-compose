@@ -1,0 +1,21 @@
+---
+    - name: db-resource-clearance
+      hosts: k8smaster
+      become: 'yes'
+      become_user: kubmaster
+      tasks:
+             - name: delete service for db
+               shell: kubectl delete -f dev-db/medilab-boot-db-service.yml
+             - name: delete daemonset for db
+               shell: kubectl delete -f dev-db/medilab-boot-db-daemonset.yml
+             - name: delete configmap for db
+               shell: kubectl delete -f dev-db/medilab-configmap.yml
+             - name: delete secret for db
+               shell: kubectl delete -f dev-db/medilab-secret.yml
+             - name: delete pvc for db
+               shell: kubectl delete -f dev-db/mysql-pvc.yml
+             - name: delete pv for db
+               shell: kubectl delete -f dev-db/mysql-pv.yml
+             - name: delete the namespace for db
+               shell: kubectl delete -f dev-db/database-ns.yml
+             

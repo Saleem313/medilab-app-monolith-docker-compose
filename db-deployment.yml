@@ -1,0 +1,20 @@
+---
+    - name: db-deployment
+      hosts: k8smaster
+      become: 'yes'
+      become_user: kubmaster
+      tasks:
+             - name: create the namespace for db
+               shell: kubectl apply -f dev-db/database-ns.yml
+             - name: create configmap for db
+               shell: kubectl apply -f dev-db/medilab-configmap.yml
+             - name: create secret for db
+               shell: kubectl apply -f dev-db/medilab-secret.yml
+             - name: create pv for db
+               shell: kubectl apply -f dev-db/mysql-pv.yml
+             - name: create pvc for db
+               shell: kubectl apply -f dev-db/mysql-pvc.yml
+             - name: create daemonset for db
+               shell: kubectl apply -f dev-db/medilab-boot-db-daemonset.yml
+             - name: create service for db
+               shell: kubectl apply -f dev-db/medilab-boot-db-service.yml
