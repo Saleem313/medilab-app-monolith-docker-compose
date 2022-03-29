@@ -1,0 +1,16 @@
+---
+    - name: docker image building
+      hosts: dockerserver
+      become: 'yes'
+      become_user: dockeradmin
+      tasks:
+             - name: create docker image
+               shell: docker build -f Dockerfile -t medilab-boot-app-img .
+             - name: create docker image
+               shell: docker build -f Dockerfile -t medilab-boot-app-img .
+             - name: tag the docker image
+               shell: docker tag medilab-boot-app-img  saleem786/medilab-boot-app-img
+             - name: docker login
+               shell: docker login --username=saleem786 --password=Madka786*
+             - name: push the image to docker repository
+               shell: docker push saleem786/medilab-boot-app-img
