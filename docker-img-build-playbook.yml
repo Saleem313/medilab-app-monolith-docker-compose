@@ -6,8 +6,6 @@
       tasks:
              - name: create docker image
                shell: docker build -f Dockerfile -t medilab-boot-app-img .
-             - name: create docker image
-               shell: docker build -f Dockerfile -t medilab-boot-app-img .
              - name: tag the docker image
                shell: docker tag medilab-boot-app-img  saleem786/medilab-boot-app-img
              - name: docker login
