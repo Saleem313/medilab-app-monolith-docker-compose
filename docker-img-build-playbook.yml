@@ -4,6 +4,8 @@
       become: 'yes'
       become_user: dockeradmin
       tasks:
+             - name: remove all docker images
+               shell: docker rmi -f  $(docker images - q)
              - name: create docker image
                shell: docker build -f Dockerfile -t medilab-boot-app-img .
              - name: tag the docker image
