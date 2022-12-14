@@ -14,8 +14,12 @@ services:
       - MEDILAB_BOOT_APP_DB_TYPE=mysql
       - MEDILAB_BOOT_APP_DB_CONTAINER_NAME=medilab-boot-monolith-db-app-service
       - MEDILAB_BOOT_APP_DB_PORT=3306
-      - MEDILAB_BOOT_APP_DB=medilab-monolith-preclinic
+      - MEDILAB_BOOT_APP_DB=medilab_monolith_db
       - MEDILAB_BOOT_APP_DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
+     
+    depends_on:
+       - medilab-boot-monolith-db-app-service
+     
 
   #app Db service name
   medilab-boot-monolith-db-app-service:
@@ -27,13 +31,14 @@ services:
     volumes:
       #- /opt/docker_files/medilab_monolith_app/mysql_volume:/var/lib/mysql
       #creating name volume
-      -  mysql_volume:/var/lib/mysql
+       - mysql_volume:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
      # - MYSQL_DATABASE=medilab-monolith-preclinic
       - MYSQL_DATABASE=medilab_monolith_db
 volumes:
   mysql_volume:
+    name: mysql_volume
     #using extenal volume no need to create volume using docker-compose file
     external: true
 

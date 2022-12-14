@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.medilab.preclinic.bean.DepartmentBean;
 import com.medilab.preclinic.service.MedilabDepartmentService;
 
+import io.micrometer.core.annotation.Timed;
+
+
+
 @Controller
 @RequestMapping("/departments")
 public class DepartmentController {
@@ -20,6 +24,7 @@ public class DepartmentController {
 	private MedilabDepartmentService deptService;
 	
 	@RequestMapping
+	@Timed(value = "viewDepartmentsBoard.time ", description = "time taken to load the Department")
 	public String viewDepartmentsBoard(Model model) {
 		System.out.println("i am in departments");
 		List<DepartmentBean> deptBeanList = deptService.findAll();

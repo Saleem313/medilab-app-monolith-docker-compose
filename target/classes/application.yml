@@ -4,10 +4,10 @@ spring:
   application:
     name: medilab-monolith-app 
   datasource:
-    driver-class-name: '${MEDILAB_BOOT_APP_DB_DRIVER:com.mysql.jdbc.Driver}' 
+    driver-class-name: '${MEDILAB_BOOT_APP_DB_DRIVER:com.mysql.cj.jdbc.Driver}' 
     username: '${MEDILAB_BOOT_APP_DB_USERNAME:root}'
     password: '${MEDILAB_BOOT_APP_DB_PASSWORD:root}'
-    url: jdbc:${MEDILAB_BOOT_APP_DB_TYPE:mysql}://${MEDILAB_BOOT_APP_DB_CONTAINER_NAME:localhost}:${MEDILAB_BOOT_APP_DB_PORT:3306}/${MEDILAB_BOOT_APP_DB:medilab-monolith-preclinic}
+    url: jdbc:${MEDILAB_BOOT_APP_DB_TYPE:mysql}://${MEDILAB_BOOT_APP_DB_CONTAINER_NAME:localhost}:${MEDILAB_BOOT_APP_DB_PORT:3306}/${MEDILAB_BOOT_APP_DB:medilab_monolith_preclinic}
   h2:
     console:
       enabled: false
@@ -22,3 +22,4 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+management:  endpoints:    web:      exposure:        include:        - '*'
