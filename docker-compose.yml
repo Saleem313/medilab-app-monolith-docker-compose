@@ -4,6 +4,8 @@ services:
   medilab-boot-monolith-app-service:
     container_name: medilab-monolith-boot-app-cntnr
     image: medilab-monolith-boot-app-img 
+    networks: 
+         - medilab_network
     restart: on-failure
     ports:
       - 5006:8087
@@ -25,7 +27,9 @@ services:
   medilab-boot-monolith-db-app-service:
     #container_name: medilab-boot-monolith-db
     container_name: medilab-boot-monolith-db
-    image: mysql:5.7.36
+    image: mysql
+    networks: 
+         - medilab_network
     ports:
       - 3306:3306
     volumes:
@@ -41,4 +45,6 @@ volumes:
     name: mysql_volume
     #using extenal volume no need to create volume using docker-compose file
     external: true
+networks:
+     -  medilab_network
 
